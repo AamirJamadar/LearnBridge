@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badges - LearnBridge</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23667eea'/%3E%3Cstop offset='100%25' stop-color='%23f093fb'/%3E%3C/linearGradient%3E%3Crect width='512' height='512' rx='120' fill='url(%23g)'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial, sans-serif' font-weight='800' font-size='260' fill='white'%3ELB%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated Gradient Background -->
+    <div class="gradient-bg"></div>
+    
+    <!-- Sidebar Navigation - Loaded dynamically -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        <header class="top-navbar">
+            <div class="navbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Badges</h1>
+            </div>
+            <div class="navbar-right">
+                <!-- Gamification: XP and Level Display -->
+                <div class="xp-display" id="xpDisplay">
+                    <div class="xp-item">
+                        <i class="fas fa-star"></i>
+                        <span class="xp-value" id="xpValue">0</span>
+                        <span class="xp-label">XP</span>
+                    </div>
+                    <div class="level-display">
+                        <span class="level-badge" id="levelBadge">Lv.1</span>
+                        <div class="level-progress-container">
+                            <div class="level-progress-bar" id="levelProgressBar" style="width: 0%;"></div>
+                        </div>
+                        <span class="level-next" id="levelNext">0/100</span>
+                    </div>
+                    <div class="badges-display" id="badgesDisplay">
+                        <i class="fas fa-medal" title="Badges"></i>
+                        <span class="badge-count" id="badgeCount">0</span>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-profile">
+                    <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar">
+                    <span class="user-name">John Doe</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Badges Section -->
+            <section class="content-section active" id="badges">
+                <div class="section-header">
+                    <h2>My Badges & Achievements</h2>
+                    <p>Unlock new icons and ranks as you learn and compete</p>
+                </div>
+                
+                <div class="cards-grid">
+                    <!-- Earned Badges -->
+                    <div class="card badge-card">
+                        <div class="card-body">
+                            <div class="badge-icon-container earned">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <h3>Early Bird</h3>
+                            <p>Joined the LearnBridge platform during the launch phase.</p>
+                            <span class="badge-date">Earned on March 27, 2026</span>
+                        </div>
+                    </div>
+
+                    <div class="card badge-card">
+                        <div class="card-body">
+                            <div class="badge-icon-container earned">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3>Quick Starter</h3>
+                            <p>Completed your first course lesson within 24 hours of joining.</p>
+                            <span class="badge-date">Earned on March 27, 2026</span>
+                        </div>
+                    </div>
+
+                    <!-- Locked Badges -->
+                    <div class="card badge-card locked">
+                        <div class="card-body">
+                            <div class="badge-icon-container">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <h3>7-Day Streak</h3>
+                            <p>Study for 7 consecutive days to earn this badge.</p>
+                            <div class="badge-progress">
+                                <div class="progress-bar"><div class="progress-fill" style="width: 14%;"></div></div>
+                                <span>1/7 Days</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card badge-card locked">
+                        <div class="card-body">
+                            <div class="badge-icon-container">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <h3>Quiz Master</h3>
+                            <p>Score 100% on 10 different quizzes.</p>
+                            <div class="badge-progress">
+                                <div class="progress-bar"><div class="progress-fill" style="width: 0%;"></div></div>
+                                <span>0/10 Quizzes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card badge-card locked">
+                        <div class="card-body">
+                            <div class="badge-icon-container">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3>Deep Focus</h3>
+                            <p>Spend 50 total hours learning on the platform.</p>
+                            <div class="badge-progress">
+                                <div class="progress-bar"><div class="progress-fill" style="width: 48%;"></div></div>
+                                <span>24/50 Hours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card badge-card locked">
+                        <div class="card-body">
+                            <div class="badge-icon-container">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <h3>Leaderboard King</h3>
+                            <p>Reach Rank #1 on the global leaderboard.</p>
+                            <span class="badge-hint">Current Rank: #4</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

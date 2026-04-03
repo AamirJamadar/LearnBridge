@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnBridge</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23667eea'/%3E%3Cstop offset='100%25' stop-color='%23f093fb'/%3E%3C/linearGradient%3E%3Crect width='512' height='512' rx='120' fill='url(%23g)'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial, sans-serif' font-weight='800' font-size='260' fill='white'%3ELB%3C/text%3E%3C/svg%3E">
+
+    <!-- Critical CSS Inlined for Performance -->
+    <style>
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%
+            }
+
+            50% {
+                background-position: 100% 50%
+            }
+
+            100% {
+                background-position: 0% 50%
+            }
+        }
+
+        :root {
+            --bg-gradient: linear-gradient(-45deg, #021a83, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe, #43e97b, #38f9d7);
+            --primary-color: #667eea;
+            --bg-primary: rgba(255, 255, 255, 0.1);
+            --text-primary: #fff;
+            --sidebar-width: 260px;
+            --sidebar-collapsed-width: 80px;
+            --navbar-height: 70px
+        }
+
+        html[data-theme="dark"] {
+            --bg-gradient: linear-gradient(-45deg, #0f172a, #1b1236, #3b0764, #4c0519, #083344, #020617, #064e3b, #065f46);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            overflow-x: hidden
+        }
+    </style>
+
+    <!-- Bundled & Minified Styles -->
+    <link rel="stylesheet" href="css/bundle.min.css">
+
+    <!-- Font Optimizations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"
+        media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        media="print" onload="this.media='all'">
+</head>
+
+<body>
+    <!-- Animated Gradient Background -->
+    <div class="gradient-bg"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>LearnBridge</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="nav-item active">
+                    <a href="#" data-page="dashboard" title="Dashboard">
+                        <i class="fas fa-th-large" title="Dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" data-page="quiz" title="Quiz">
+                        <i class="fas fa-question-circle" title="Quiz"></i>
+                        <span>Quiz</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" data-page="badges" title="Badges">
+                        <i class="fas fa-medal" title="Badges"></i>
+                        <span>Badges</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" data-page="leaderboard" title="Leaderboard">
+                        <i class="fas fa-trophy" title="Leaderboard"></i>
+                        <span>Leaderboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" data-page="analytics" title="Analytics">
+                        <i class="fas fa-chart-bar" title="Analytics"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" data-page="poll" title="Poll">
+                        <i class="fas fa-poll" title="Poll"></i>
+                        <span>Poll</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" data-page="settings" title="Settings">
+                        <i class="fas fa-cog" title="Settings"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        <header class="top-navbar">
+            <div class="navbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title">Dashboard</h1>
+            </div>
+            <div class="navbar-right">
+                <!-- Gamification: XP and Level Display -->
+                <div class="xp-display" id="xpDisplay">
+                    <div class="xp-item">
+                        <i class="fas fa-star"></i>
+                        <span class="xp-value" id="xpValue">0</span>
+                        <span class="xp-label">XP</span>
+                    </div>
+                    <div class="level-display">
+                        <span class="level-badge" id="levelBadge">Lv.1</span>
+                        <div class="level-progress-container">
+                            <div class="level-progress-bar" id="levelProgressBar" style="width: 0%;"></div>
+                        </div>
+                        <span class="level-next" id="levelNext">0/100</span>
+                    </div>
+                    <div class="badges-display" id="badgesDisplay">
+                        <i class="fas fa-medal" title="Badges"></i>
+                        <span class="badge-count" id="badgeCount">0</span>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-profile">
+                    <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar" loading="lazy">
+                    <span class="user-name">John Doe</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Sections -->
+        <div class="content-area">
+            <!-- Dashboard Section -->
+            <section class="content-section active" id="dashboard">
+                <div class="welcome-card">
+                    <div class="welcome-content">
+                        <h2>Welcome back, John!</h2>
+                        <p>Continue your learning journey and track your progress.</p>
+                    </div>
+                    <div class="welcome-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-book"></i>
+                            <span class="stat-number">12</span>
+                            <span class="stat-label">Courses</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span class="stat-number">8</span>
+                            <span class="stat-label">Completed</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-clock"></i>
+                            <span class="stat-number">24h</span>
+                            <span class="stat-label">Learning Time</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Continue Learning</h3>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                        <div class="card-body">
+                            <div class="course-item">
+                                <div class="course-icon"
+                                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="course-info">
+                                    <h4>JavaScript Fundamentals</h4>
+                                    <p>Progress: 75%</p>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 75%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Upcoming Quiz</h3>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                        <div class="card-body">
+                            <div class="quiz-item">
+                                <div class="quiz-icon"
+                                    style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-react"></i>
+                                </div>
+                                <div class="quiz-info">
+                                    <h4>React Basics</h4>
+                                    <p>10 Questions • 15 mins</p>
+                                    <button class="btn-primary">Start Quiz</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Recent Activity</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="activity-list">
+                                <li>
+                                    <div class="activity-icon" style="background: #4ade80;">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="activity-info">
+                                        <p>Completed "CSS Flexbox" quiz</p>
+                                        <span>2 hours ago</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="activity-icon" style="background: #60a5fa;">
+                                        <i class="fas fa-play"></i>
+                                    </div>
+                                    <div class="activity-info">
+                                        <p>Started "Python Basics" course</p>
+                                        <span>Yesterday</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="activity-icon" style="background: #f472b6;">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div class="activity-info">
+                                        <p>Earned "Quick Learner" badge</p>
+                                        <span>2 days ago</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Quick Actions</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="quick-actions">
+                                <button class="action-btn">
+                                    <i class="fas fa-plus"></i>
+                                    <span>New Course</span>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-users"></i>
+                                    <span>Join Class</span>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>View Notes</span>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Schedule</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiz Section -->
+            <section class="content-section" id="quiz">
+                <div class="section-header">
+                    <h2>Language Quizzes</h2>
+                    <p>Test your HTML, CSS, and JavaScript knowledge</p>
+                </div>
+
+                <!-- Quiz Language Tabs -->
+                <div class="quiz-tabs">
+                    <button class="quiz-tab active" data-language="html">
+                        <i class="fab fa-html5"></i>
+                        <span>HTML</span>
+                    </button>
+                    <button class="quiz-tab" data-language="css">
+                        <i class="fab fa-css3-alt"></i>
+                        <span>CSS</span>
+                    </button>
+                    <button class="quiz-tab" data-language="javascript">
+                        <i class="fab fa-js"></i>
+                        <span>JavaScript</span>
+                    </button>
+                </div>
+
+                <!-- Quiz Score Display -->
+                <div class="quiz-score-panel">
+                    <div class="score-item">
+                        <i class="fas fa-star"></i>
+                        <span class="score-label">Current Score:</span>
+                        <span class="score-value" id="currentScore">0</span>
+                        <span class="score-total">/ <span id="totalQuestions">5</span></span>
+                    </div>
+                    <div class="score-item">
+                        <i class="fas fa-percentage"></i>
+                        <span class="score-label">Percentage:</span>
+                        <span class="score-value" id="scorePercentage">0%</span>
+                    </div>
+                </div>
+
+                <!-- Quiz Container -->
+                <div class="quiz-container" id="quizContainer">
+                    <!-- Quiz Start Screen -->
+                    <div class="quiz-start" id="quizStart">
+                        <div class="quiz-start-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>Ready to Test Your Knowledge?</h3>
+                        <p>Select a language above and start the quiz. You'll have <span id="questionCount">5</span>
+                            questions to answer.</p>
+                        <button class="btn-primary quiz-start-btn" id="startQuizBtn">
+                            <i class="fas fa-play"></i>
+                            Start Quiz
+                        </button>
+                    </div>
+
+                    <!-- Quiz Questions -->
+                    <div class="quiz-questions" id="quizQuestions" style="display: none;">
+                        <!-- Progress Bar -->
+                        <div class="quiz-progress">
+                            <div class="progress-text">
+                                <span>Question <span id="questionNumber">1</span> of <span
+                                        id="totalQuestionsDisplay">5</span></span>
+                                <span id="progressPercent">20%</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" id="progressBarFill" style="width: 20%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Question Card -->
+                        <div class="quiz-question-card">
+                            <div class="question-header">
+                                <span class="question-badge" id="questionBadge">HTML</span>
+                            </div>
+                            <h3 class="question-text" id="questionText">What does HTML stand for?</h3>
+
+                            <!-- Answer Options -->
+                            <div class="answer-options" id="answerOptions">
+                                <button class="answer-option" data-option="a">
+                                    <span class="option-letter">A</span>
+                                    <span class="option-text">Answer option text</span>
+                                </button>
+                                <button class="answer-option" data-option="b">
+                                    <span class="option-letter">B</span>
+                                    <span class="option-text">Answer option text</span>
+                                </button>
+                                <button class="answer-option" data-option="c">
+                                    <span class="option-letter">C</span>
+                                    <span class="option-text">Answer option text</span>
+                                </button>
+                                <button class="answer-option" data-option="d">
+                                    <span class="option-letter">D</span>
+                                    <span class="option-text">Answer option text</span>
+                                </button>
+                            </div>
+
+                            <!-- Feedback Display -->
+                            <div class="answer-feedback" id="answerFeedback" style="display: none;">
+                                <div class="feedback-content">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span class="feedback-text">Correct!</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="quiz-navigation">
+                            <button class="btn-secondary" id="prevBtn" disabled>
+                                <i class="fas fa-arrow-left"></i>
+                                Previous
+                            </button>
+                            <button class="btn-primary" id="nextBtn">
+                                Next
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Results -->
+                    <div class="quiz-results" id="quizResults" style="display: none;">
+                        <div class="results-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>Quiz Completed!</h3>
+                        <div class="results-score">
+                            <span class="results-value" id="finalScore">0</span>
+                            <span class="results-divider">/</span>
+                            <span class="results-total" id="finalTotal">5</span>
+                        </div>
+                        <p class="results-message" id="resultsMessage">Great job!</p>
+                        <div class="results-stats">
+                            <div class="stat-correct">
+                                <i class="fas fa-check"></i>
+                                <span id="correctCount">0</span> Correct
+                            </div>
+                            <div class="stat-incorrect">
+                                <i class="fas fa-times"></i>
+                                <span id="incorrectCount">0</span> Incorrect
+                            </div>
+                        </div>
+                        <div class="results-actions">
+                            <button class="btn-primary" id="retryBtn">
+                                <i class="fas fa-redo"></i>
+                                Retry Quiz
+                            </button>
+                            <button class="btn-secondary" id="changeLanguageBtn">
+                                <i class="fas fa-language"></i>
+                                Change Language
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Badges Section -->
+            <section class="content-section" id="badges">
+                <div class="section-header">
+                    <h2>My Badges & Achievements</h2>
+                    <p>Unlock new icons and ranks as you learn and compete</p>
+                </div>
+
+                <div class="cards-grid">
+                    <!-- Earned Badges -->
+                    <div class="card badge-card">
+                        <div class="card-body">
+                            <div class="badge-icon-container earned">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <h3>Early Bird</h3>
+                            <p>Joined the LearnBridge platform during the launch phase.</p>
+                            <span class="badge-date">Earned on March 27, 2026</span>
+                        </div>
+                    </div>
+
+                    <div class="card badge-card">
+                        <div class="card-body">
+                            <div class="badge-icon-container earned">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3>Quick Starter</h3>
+                            <p>Completed your first course lesson within 24 hours of joining.</p>
+                            <span class="badge-date">Earned on March 27, 2026</span>
+                        </div>
+                    </div>
+
+                    <!-- Locked Badges -->
+                    <div class="card badge-card locked">
+                        <div class="card-body">
+                            <div class="badge-icon-container">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <h3>7-Day Streak</h3>
+                            <p>Study for 7 consecutive days to earn this badge.</p>
+                            <div class="badge-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 14%;"></div>
+                                </div>
+                                <span>1/7 Days</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card badge-card locked">
+                        <div class="card-body">
+                            <div class="badge-icon-container">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <h3>Quiz Master</h3>
+                            <p>Score 100% on 10 different quizzes.</p>
+                            <div class="badge-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 0%;"></div>
+                                </div>
+                                <span>0/10 Quizzes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card badge-card locked">
+                        <div class="card-body">
+                            <div class="badge-icon-container">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3>Deep Focus</h3>
+                            <p>Spend 50 total hours learning on the platform.</p>
+                            <div class="badge-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 48%;"></div>
+                                </div>
+                                <span>24/50 Hours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card badge-card locked">
+                        <div class="card-body">
+                            <div class="badge-icon-container">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <h3>Leaderboard King</h3>
+                            <p>Reach Rank #1 on the global leaderboard.</p>
+                            <span class="badge-hint">Current Rank: #4</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Leaderboard Section -->
+            <section class="content-section" id="leaderboard">
+                <div class="section-header">
+                    <h2>Leaderboard</h2>
+                    <p>See how you rank against other learners</p>
+                </div>
+                <div class="cards-grid leaderboard-grid">
+                    <div class="card leaderboard-card">
+                        <div class="leaderboard-header">
+                            <div class="rank-badge gold">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <img src="https://via.placeholder.com/80" alt="User" class="leaderboard-avatar"
+                                loading="lazy">
+                            <h3>Sarah Johnson</h3>
+                            <p class="points">2,450 points</p>
+                        </div>
+                    </div>
+
+                    <div class="card leaderboard-card">
+                        <div class="leaderboard-header">
+                            <div class="rank-badge silver">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <img src="https://via.placeholder.com/80" alt="User" class="leaderboard-avatar"
+                                loading="lazy">
+                            <h3>Mike Chen</h3>
+                            <p class="points">2,280 points</p>
+                        </div>
+                    </div>
+
+                    <div class="card leaderboard-card">
+                        <div class="leaderboard-header">
+                            <div class="rank-badge bronze">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <img src="https://via.placeholder.com/80" alt="User" class="leaderboard-avatar"
+                                loading="lazy">
+                            <h3>Emily Davis</h3>
+                            <p class="points">2,120 points</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Your Ranking</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>User</th>
+                                    <th>Points</th>
+                                    <th>Badges</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="rank">#4</td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://via.placeholder.com/32" alt="User" loading="lazy">
+                                            <span>You</span>
+                                        </div>
+                                    </td>
+                                    <td>1,980</td>
+                                    <td>
+                                        <div class="badges">
+                                            <i class="fas fa-fire" title="7-day streak"></i>
+                                            <i class="fas fa-star" title="Quiz Master"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="rank">#5</td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://via.placeholder.com/32" alt="User" loading="lazy">
+                                            <span>Alex Thompson</span>
+                                        </div>
+                                    </td>
+                                    <td>1,850</td>
+                                    <td>
+                                        <div class="badges">
+                                            <i class="fas fa-bolt" title="Fast Finisher"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="rank">#6</td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://via.placeholder.com/32" alt="User" loading="lazy">
+                                            <span>Lisa Wang</span>
+                                        </div>
+                                    </td>
+                                    <td>1,720</td>
+                                    <td>
+                                        <div class="badges">
+                                            <i class="fas fa-book" title="Course Completer"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section class="content-section" id="analytics">
+                <div class="section-header">
+                    <h2>Analytics</h2>
+                    <p>Track your learning progress and performance</p>
+                </div>
+                <div class="analytics-grid">
+                    <div class="card analytics-card">
+                        <div class="card-header">
+                            <h3>Weekly Progress</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="stat-large">
+                                <span class="stat-value">24</span>
+                                <span class="stat-unit">hours</span>
+                                <span class="stat-period">this week</span>
+                            </div>
+                            <div class="progress-stats">
+                                <div class="progress-item">
+                                    <span>Mon</span>
+                                    <div class="mini-progress">
+                                        <div class="mini-fill" style="width: 60%;"></div>
+                                    </div>
+                                    <span>3h</span>
+                                </div>
+                                <div class="progress-item">
+                                    <span>Tue</span>
+                                    <div class="mini-progress">
+                                        <div class="mini-fill" style="width: 80%;"></div>
+                                    </div>
+                                    <span>4h</span>
+                                </div>
+                                <div class="progress-item">
+                                    <span>Wed</span>
+                                    <div class="mini-progress">
+                                        <div class="mini-fill" style="width: 45%;"></div>
+                                    </div>
+                                    <span>2.5h</span>
+                                </div>
+                                <div class="progress-item">
+                                    <span>Thu</span>
+                                    <div class="mini-progress">
+                                        <div class="mini-fill" style="width: 70%;"></div>
+                                    </div>
+                                    <span>3.5h</span>
+                                </div>
+                                <div class="progress-item">
+                                    <span>Fri</span>
+                                    <div class="mini-progress">
+                                        <div class="mini-fill" style="width: 90%;"></div>
+                                    </div>
+                                    <span>5h</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card analytics-card">
+                        <div class="card-header">
+                            <h3>Quiz Performance</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="performance-stats">
+                                <div class="perf-item">
+                                    <div class="perf-circle" style="border-color: #4ade80;">
+                                        <span>85%</span>
+                                    </div>
+                                    <p>Average Score</p>
+                                </div>
+                                <div class="perf-item">
+                                    <div class="perf-circle" style="border-color: #60a5fa;">
+                                        <span>12</span>
+                                    </div>
+                                    <p>Quizzes Taken</p>
+                                </div>
+                                <div class="perf-item">
+                                    <div class="perf-circle" style="border-color: #f472b6;">
+                                        <span>10</span>
+                                    </div>
+                                    <p>Passed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card analytics-card full-width">
+                        <div class="card-header">
+                            <h3>Subject Progress</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="subject-bars">
+                                <div class="subject-item">
+                                    <div class="subject-info">
+                                        <span>JavaScript</span>
+                                        <span>75%</span>
+                                    </div>
+                                    <div class="subject-bar">
+                                        <div class="subject-fill"
+                                            style="width: 75%; background: linear-gradient(90deg, #667eea, #764ba2);">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="subject-item">
+                                    <div class="subject-info">
+                                        <span>Python</span>
+                                        <span>60%</span>
+                                    </div>
+                                    <div class="subject-bar">
+                                        <div class="subject-fill"
+                                            style="width: 60%; background: linear-gradient(90deg, #f093fb, #f5576c);">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="subject-item">
+                                    <div class="subject-info">
+                                        <span>HTML/CSS</span>
+                                        <span>90%</span>
+                                    </div>
+                                    <div class="subject-bar">
+                                        <div class="subject-fill"
+                                            style="width: 90%; background: linear-gradient(90deg, #4facfe, #00f2fe);">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="subject-item">
+                                    <div class="subject-info">
+                                        <span>SQL</span>
+                                        <span>45%</span>
+                                    </div>
+                                    <div class="subject-bar">
+                                        <div class="subject-fill"
+                                            style="width: 45%; background: linear-gradient(90deg, #43e97b, #38f9d7);">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Poll Section -->
+            <section class="content-section" id="poll">
+                <div class="section-header">
+                    <h2>Polls</h2>
+                    <p>Vote on learning topics and see community preferences</p>
+                </div>
+                <div class="cards-grid">
+                    <div class="card poll-card">
+                        <div class="card-header">
+                            <h3>Current Poll</h3>
+                            <span class="poll-status">Active</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="poll-question">Which programming language would you like to learn next?</p>
+                            <div class="poll-options">
+                                <label class="poll-option">
+                                    <input type="radio" name="poll1" value="rust">
+                                    <span class="option-text">Rust</span>
+                                    <span class="option-percent">32%</span>
+                                    <div class="option-bar">
+                                        <div class="option-fill" style="width: 32%;"></div>
+                                    </div>
+                                </label>
+                                <label class="poll-option">
+                                    <input type="radio" name="poll1" value="go">
+                                    <span class="option-text">Go</span>
+                                    <span class="option-percent">28%</span>
+                                    <div class="option-bar">
+                                        <div class="option-fill" style="width: 28%;"></div>
+                                    </div>
+                                </label>
+                                <label class="poll-option">
+                                    <input type="radio" name="poll1" value="swift">
+                                    <span class="option-text">Swift</span>
+                                    <span class="option-percent">22%</span>
+                                    <div class="option-bar">
+                                        <div class="option-fill" style="width: 22%;"></div>
+                                    </div>
+                                </label>
+                                <label class="poll-option">
+                                    <input type="radio" name="poll1" value="kotlin">
+                                    <span class="option-text">Kotlin</span>
+                                    <span class="option-percent">18%</span>
+                                    <div class="option-bar">
+                                        <div class="option-fill" style="width: 18%;"></div>
+                                    </div>
+                                </label>
+                            </div>
+                            <button class="btn-primary poll-btn">Vote Now</button>
+                            <p class="poll-votes">156 votes • 3 days left</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Past Polls</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="past-polls">
+                                <li>
+                                    <div class="poll-info">
+                                        <h4>Favorite Learning Time?</h4>
+                                        <p>Morning (6AM-12PM) won with 45%</p>
+                                    </div>
+                                    <span class="poll-ended">Ended</span>
+                                </li>
+                                <li>
+                                    <div class="poll-info">
+                                        <h4>Preferred Course Format?</h4>
+                                        <p>Video Tutorials won with 52%</p>
+                                    </div>
+                                    <span class="poll-ended">Ended</span>
+                                </li>
+                                <li>
+                                    <div class="poll-info">
+                                        <h4>Weekly Study Goal?</h4>
+                                        <p>10 hours/week won with 38%</p>
+                                    </div>
+                                    <span class="poll-ended">Ended</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section class="content-section" id="settings">
+                <div class="section-header">
+                    <h2>Settings</h2>
+                    <p>Customize your learning experience</p>
+                </div>
+                <div class="settings-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Profile Settings</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="settings-form" id="profileSettingsForm">
+                                <div class="profile-photo-upload">
+                                    <img src="https://via.placeholder.com/80" alt="Profile Photo Preview"
+                                        id="profilePhotoPreview" class="profile-photo-preview" loading="lazy">
+                                    <div class="upload-controls">
+                                        <label for="profilePhotoInput" class="btn-secondary">
+                                            <i class="fas fa-camera"></i> Change Photo
+                                        </label>
+                                        <input type="file" id="profilePhotoInput" accept="image/*" hidden>
+                                        <button type="button" class="btn-danger" id="removePhotoBtn"
+                                            style="display: none;">
+                                            <i class="fas fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" value="John Doe" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" value="john@example.com" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input type="text" value="johndoe" class="form-input">
+                                </div>
+                                <button type="button" class="btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Preferences</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-options">
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>Dark Mode</h4>
+                                        <p>Enable dark theme</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="darkModeToggle">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>Email Notifications</h4>
+                                        <p>Receive course updates</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>Weekly Progress Report</h4>
+                                        <p>Get weekly summary</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>Sound Effects</h4>
+                                        <p>Play sounds on actions</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card full-width">
+                        <div class="card-header">
+                            <h3>Account</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="account-actions">
+                                <button class="btn-secondary">
+                                    <i class="fas fa-key"></i>
+                                    Change Password
+                                </button>
+                                <button class="btn-secondary">
+                                    <i class="fas fa-download"></i>
+                                    Export Data
+                                </button>
+                                <button class="btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                    Delete Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-container">
+            <button class="modal-close" id="loginModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fas fa-sign-in-alt"></i>
+                </div>
+                <h2>Welcome Back</h2>
+                <p>Sign in to continue your learning journey</p>
+            </div>
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">
+                        <i class="fas fa-user"></i>
+                        Username
+                    </label>
+                    <input type="text" id="loginUsername" class="form-input" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password"
+                            required>
+                        <button type="button" class="password-toggle" id="loginPasswordToggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-error" id="loginError"></div>
+                <button type="submit" class="btn-auth-submit">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </button>
+            </form>
+            <div class="modal-footer">
+                <p>Don't have an account? <a href="#" id="switchToRegister">Register</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal-container">
+            <button class="modal-close" id="registerModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h2>Create Account</h2>
+                <p>Join LearnBridge and start learning</p>
+            </div>
+            <form class="auth-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">
+                        <i class="fas fa-user"></i>
+                        Username
+                    </label>
+                    <input type="text" id="registerUsername" class="form-input" placeholder="Choose a username"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">
+                        <i class="fas fa-envelope"></i>
+                        Email
+                    </label>
+                    <input type="email" id="registerEmail" class="form-input" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="registerPassword" class="form-input" placeholder="Create a password"
+                            required>
+                        <button type="button" class="password-toggle" id="registerPasswordToggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">
+                        <i class="fas fa-lock"></i>
+                        Confirm Password
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="registerConfirmPassword" class="form-input"
+                            placeholder="Confirm your password" required>
+                        <button type="button" class="password-toggle" id="registerConfirmPasswordToggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-error" id="registerError"></div>
+                <button type="submit" class="btn-auth-submit">
+                    <i class="fas fa-user-plus"></i>
+                    Create Account
+                </button>
+            </form>
+            <div class="modal-footer">
+                <p>Already have an account? <a href="#" id="switchToLogin">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Required Overlay for Quiz Section -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-overlay-content">
+            <div class="auth-overlay-icon">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h2>Login Required</h2>
+            <p>Please login or register to access the Quiz section</p>
+            <div class="auth-overlay-buttons">
+                <button class="btn-auth btn-login" id="overlayLoginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </button>
+                <button class="btn-auth btn-register" id="overlayRegisterBtn">
+                    <i class="fas fa-user-plus"></i>
+                    Register
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Badge Unlock Popup -->
+    <div class="badge-popup" id="badgePopup">
+        <div class="badge-popup-content">
+            <button class="badge-popup-close" id="badgePopupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="badge-popup-icon" id="badgePopupIcon">
+                <i class="fas fa-medal"></i>
+            </div>
+            <h3 class="badge-popup-title">Badge Unlocked!</h3>
+            <p class="badge-popup-name" id="badgePopupName">Beginner</p>
+            <p class="badge-popup-message">You've earned a new badge!</p>
+            <div class="badge-popup-xp">
+                <i class="fas fa-star"></i>
+                <span id="badgePopupXP">+10 XP</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- XP Gain Popup -->
+    <div class="xp-popup" id="xpPopup">
+        <span class="xp-popup-text">+10 XP</span>
+    </div>
+
+    <script src="js/bundle.min.js" defer></script>
+</body>
+
+</html>
