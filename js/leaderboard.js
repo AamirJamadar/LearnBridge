@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadLeaderboard() {
     try {
-        const response = await fetch('http://127.0.0.1:5000/api/leaderboard');
+        const response = await fetch('/api/leaderboard');
         if (!response.ok) throw new Error('Failed to fetch leaderboard');
         const data = await response.json();
         

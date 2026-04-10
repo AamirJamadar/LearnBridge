@@ -295,6 +295,7 @@ function calculateScore() {
 }
 
 function displayResults() {
+    fireConfetti();
     var result = calculateScore();
     var percentage = Math.round((result.correct / result.total) * 100);
     var finalScoreEl = document.getElementById('finalScore');
@@ -425,7 +426,7 @@ function saveHighScore() {
     }
     
     // Submit score to backend
-    fetch('http://127.0.0.1:5000/api/quiz_results', {
+    fetch('/api/quiz_results', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -511,4 +512,79 @@ function updateHighScoresDisplay() {
     var key = 'highScore_' + user.username;
     var scores = JSON.parse(localStorage.getItem(key) || '{}');
     window.userHighScores = scores;
+}
+
+function fireConfetti() {
+    const duration = 3000;
+    const end = Date.now() + duration;
+
+    // create canvas
+    const canvas = document.createElement("canvas");
+    canvas.style.position = "fixed";
+    canvas.style.top = "0";
+    canvas.style.left = "0";
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.pointerEvents = "none";
+    canvas.style.zIndex = "9999";
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext("2d");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
+
+    let particles = [];
+    for(let i=0; i<150; i++) {
+        particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height - height,
+            r: Math.random() * 6 + 4,
+            d: Math.random() * 150 + 10,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            tilt: Math.floor(Math.random() * 10) - 10,
+            tiltAngleInc: (Math.random() * 0.07) + .05,
+            tiltAngle: 0
+        });
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+        for(let i=0; i<particles.length; i++) {
+            let p = particles[i];
+            ctx.beginPath();
+            ctx.lineWidth = p.r;
+            ctx.strokeStyle = p.color;
+            ctx.moveTo(p.x + p.tilt + p.r, p.y);
+            ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r);
+            ctx.stroke();
+        }
+        update();
+    }
+
+    function update() {
+        let remaining = false;
+        for(let i=0; i<particles.length; i++) {
+            let p = particles[i];
+            p.tiltAngle += p.tiltAngleInc;
+            p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+            p.x += Math.sin(p.d);
+            p.tilt = (Math.sin(p.tiltAngle - (i / 3))) * 15;
+
+            if (p.y <= height) {
+                remaining = true;
+            }
+        }
+
+        if (Date.now() < end || remaining) {
+            requestAnimationFrame(draw);
+        } else {
+            document.body.removeChild(canvas);
+        }
+    }
+
+    draw();
 }
