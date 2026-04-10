@@ -1,6 +1,6 @@
 async function initAuth() {
     try {
-        const res = await fetch('http://127.0.0.1:5000/api/current_user', { credentials: 'include' });
+        const res = await fetch('/api/current_user', { credentials: 'include' });
         const data = await res.json();
         if (data.user) {
             updateNavbarForLoggedInUser(data.user);
@@ -120,7 +120,7 @@ function initLoginForm() {
         var errorEl = document.getElementById('loginError');
         
         try {
-            const res = await fetch('http://127.0.0.1:5000/api/login', {
+            const res = await fetch('/api/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password }),
@@ -177,7 +177,7 @@ function initRegisterForm() {
         }
         
         try {
-            const res = await fetch('http://127.0.0.1:5000/api/register', {
+            const res = await fetch('/api/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, email, password }),
@@ -288,7 +288,7 @@ function updateNavbarForGuest() {
 
 async function logout() {
     try {
-        await fetch('http://127.0.0.1:5000/api/logout', { method: 'POST', credentials: 'include' });
+        await fetch('/api/logout', { method: 'POST', credentials: 'include' });
     } catch (e) {
         console.error(e);
     }
