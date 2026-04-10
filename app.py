@@ -7,6 +7,7 @@ import os
 app = Flask(__name__, static_folder=".", static_url_path="")
 CORS(app, supports_credentials=True)
 app.secret_key = "learnbridge_secret_key_for_session" # In a real app, use a secure random key
+app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
 
 # Serve the static SPA index.html
 @app.route('/')
@@ -193,4 +194,4 @@ def save_quiz_result():
 
 if __name__ == '__main__':
     database.init_db()  # Ensure DB exists
-    app.run(debug=True, port=5000)
+    app.run(debug=False, port=3000, host="0.0.0.0")
